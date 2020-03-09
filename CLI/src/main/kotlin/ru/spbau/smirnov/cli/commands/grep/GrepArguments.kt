@@ -2,6 +2,7 @@ package ru.spbau.smirnov.cli.commands.grep
 
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
+import com.beust.jcommander.ParameterException
 import java.lang.StringBuilder
 
 /**
@@ -83,7 +84,13 @@ internal class GrepArguments {
      * @throws GrepParserException if number of lines that should be printed is negative
      */
     fun parseFrom(arguments: List<String>) {
-        parser.parse(*arguments.toTypedArray())
+        try {
+            parser.parse(*arguments.toTypedArray())
+        } catch (e: ParameterException) {
+            throw GrepParserException("Error while parsing arguments").apply {
+                addSuppressed(e)
+            }
+        }
         afterJCommanderParsing()
     }
 
