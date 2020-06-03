@@ -20,6 +20,8 @@ class ExecutableFactory(private val environment: Environment, private val shell:
             "cat"  -> Cat(arguments)
             "wc"   -> Wc(arguments)
             "grep" -> Grep(arguments)
+            "cd"   -> Cd(environment, arguments)
+            "ls"   -> Ls(environment, arguments)
             else   -> UnknownCommand(environment, commandName, arguments)
         }
     }
