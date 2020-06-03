@@ -8,7 +8,7 @@ group "ru.spbau.smirnov"
 
 apply plugin: 'application'
 apply plugin: 'kotlin'
-sourceCompatibility = 1.8
+sourceCompatibility = 9
 
 version = '1.0.0'
 
@@ -48,8 +48,8 @@ run {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "9"
 }
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "9"
 }
