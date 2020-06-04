@@ -37,4 +37,35 @@ class LsTest {
             ""
         )
     }
+
+    @Test
+    fun `Should print many directories` () {
+        CommandTestUtils.runExecutorTest(
+            Ls(Environment(), listOf("src", "src/main")),
+            "src src/main",
+            "src: ${System.lineSeparator()}main test ${System.lineSeparator()}${System.lineSeparator()}"
+            + "src/main: ${System.lineSeparator()}kotlin antlr ${System.lineSeparator()}${System.lineSeparator()}",
+            ""
+        )
+    }
+
+    @Test
+    fun `Should give an error about non-directory argument`() {
+        CommandTestUtils.runExecutorTest(
+            Ls(Environment(), listOf("README.md")),
+            "README.md",
+            "",
+            "error"
+        )
+    }
+
+    @Test
+    fun `Should give an error about non-existing argument`() {
+        CommandTestUtils.runExecutorTest(
+            Ls(Environment(), listOf("X")),
+            "X",
+            "",
+            "error"
+        )
+    }
 }

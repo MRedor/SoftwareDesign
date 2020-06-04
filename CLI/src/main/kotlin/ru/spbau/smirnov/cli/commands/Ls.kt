@@ -27,6 +27,9 @@ class Ls(private val environment: Environment, arguments: List<String>) : Execut
                 }
                 print(path, streams)
                 output.writeBytes(System.lineSeparator())
+                if (arguments.size > 1) {
+                    output.writeBytes(System.lineSeparator())
+                }
             }
         }
         return 0
