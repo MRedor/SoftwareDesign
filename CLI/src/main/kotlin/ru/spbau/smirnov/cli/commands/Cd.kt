@@ -9,8 +9,10 @@ import java.nio.file.Files
 class Cd (private val environment: Environment, arguments: List<String>) : Executable(arguments) {
     override fun execute(streams: Streams): Int {
         if (arguments.isEmpty()) {
-            streams.errorStream.println("Error in cd: no argument passed")
-            return 1
+            //streams.errorStream.println("Error in cd: no argument passed")
+            //return 1
+            environment.currentDirectory = System.getProperty("user.home")
+            return 0
         }
 
         val path = Paths.get(environment.currentDirectory, arguments[0])
