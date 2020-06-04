@@ -13,6 +13,7 @@ class Ls(private val environment: Environment, arguments: List<String>) : Execut
         val output = DataOutputStream(streams.outputStream)
         if (arguments.isEmpty()) {
             print(Paths.get(environment.currentDirectory), streams)
+            output.writeBytes(System.lineSeparator())
         } else {
             for (arg in arguments) {
                 val path = Paths.get(environment.currentDirectory, arg)
@@ -20,9 +21,12 @@ class Ls(private val environment: Environment, arguments: List<String>) : Execut
                     streams.errorStream.println("Error in ls: argument is not a directory")
                     return 1
                 }
-                output.writeBytes(arg + ": ${System.lineSeparator()}")
+
+                if (arguments.size > 1) {
+                    output.writeBytes(arg + ": ${System.lineSeparator()}")
+                }
                 print(path, streams)
-                output.writeBytes("${System.lineSeparator()}")
+                output.writeBytes(System.lineSeparator())
             }
         }
         return 0
@@ -45,7 +49,7 @@ class Ls(private val environment: Environment, arguments: List<String>) : Execut
 
         try {
             path.toFile().list().forEach {
-                output.writeBytes(it.toString() + "${System.lineSeparator()}")
+                output.writeBytes("$it ")
             }
         } catch (e: IOException) {
             streams.errorStream.println("Error in ls.${System.lineSeparator()}${e.message}")
