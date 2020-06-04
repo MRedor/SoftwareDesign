@@ -40,4 +40,24 @@ class CdTest {
         assertEquals(Paths.get("src").toAbsolutePath().toString(), env.currentDirectory)
     }
 
+    @Test
+    fun `Should give an error about non-directory argument`() {
+        CommandTestUtils.runExecutorTest(
+            Cd(Environment(), listOf("README.md")),
+            "README.md",
+            "",
+            "error"
+        )
+    }
+
+    @Test
+    fun `Should give an error about non-existing argument`() {
+        CommandTestUtils.runExecutorTest(
+            Cd(Environment(), listOf("X")),
+            "X",
+            "",
+            "error"
+        )
+    }
+
 }
