@@ -30,21 +30,31 @@ class LsTest {
 
     @Test
     fun `Should print a directory` () {
-        CommandTestUtils.runExecutorTest(
+        CommandTestUtils.runExecutorTestWithList(
             Ls(Environment(), listOf("src")),
             "src",
+            listOf(
             "main test ${System.lineSeparator()}",
+                "test main ${System.lineSeparator()}"
+            ),
             ""
         )
     }
 
+
     @Test
     fun `Should print many directories` () {
-        CommandTestUtils.runExecutorTest(
-            Ls(Environment(), listOf("src", "src/main")),
-            "src src/main",
-            "src: ${System.lineSeparator()}main test ${System.lineSeparator()}${System.lineSeparator()}"
-            + "src/main: ${System.lineSeparator()}kotlin antlr ${System.lineSeparator()}${System.lineSeparator()}",
+        val first = "src: ${System.lineSeparator()}main test ${System.lineSeparator()}${System.lineSeparator()}"
+        val firstReversed = "src: ${System.lineSeparator()}test main ${System.lineSeparator()}${System.lineSeparator()}"
+        val second = "src/test/resources/testLs: ${System.lineSeparator()}${System.lineSeparator()}${System.lineSeparator()}"
+
+        CommandTestUtils.runExecutorTestWithList(
+            Ls(Environment(), listOf("src", "src/test/resources/testLs")),
+            "src src/test/resources/testLs",
+            listOf(
+                first + second,
+                firstReversed + second
+            ),
             ""
         )
     }

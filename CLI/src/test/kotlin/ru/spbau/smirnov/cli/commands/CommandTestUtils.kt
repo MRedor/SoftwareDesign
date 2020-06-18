@@ -27,4 +27,31 @@ object CommandTestUtils {
         // so just check that error exists or not
         assertTrue(String(processErrorStream.toByteArray()).isNotEmpty() == expectedErrors.isNotEmpty())
     }
+
+    fun runExecutorTestWithList(command: Executable,
+                        input: String,
+                        expectedOutput: List<String>,
+                        expectedErrors: String) {
+
+        val processInputStream = ByteArrayInputStream(input.toByteArray())
+        val processOutputStream = ByteArrayOutputStream()
+        val processErrorStream = ByteArrayOutputStream()
+
+        val streams = Streams(processInputStream, processOutputStream, PrintStream(processErrorStream))
+        command.execute(streams)
+
+        val result = String(processOutputStream.toByteArray())
+        var foundExpected = false
+        for (expected in expectedOutput) {
+            foundExpected = foundExpected or (expected == result)
+        }
+
+
+        //assertEquals(expectedOutput, String(processOutputStream.toByteArray()))
+        assertEquals(true, foundExpected)
+
+        // we cannot compare them because of languages, systems, ...
+        // so just check that error exists or not
+        assertTrue(String(processErrorStream.toByteArray()).isNotEmpty() == expectedErrors.isNotEmpty())
+    }
 }
