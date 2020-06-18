@@ -6,13 +6,22 @@ import ru.spbau.smirnov.cli.executor.Streams
 import java.nio.file.Paths
 import java.nio.file.Files
 
+/**
+ * Cd command.
+ *
+ * Changes current directory to the given one.
+ * If `arguments` is empty changes current directory to the home directory.
+ */
 class Cd (private val environment: Environment, arguments: List<String>) : Executable(arguments) {
     override fun execute(streams: Streams): Int {
         if (arguments.isEmpty()) {
-            //streams.errorStream.println("Error in cd: no argument passed")
-            //return 1
             environment.currentDirectory = System.getProperty("user.home")
             return 0
+        }
+
+        if (arguments.size > 1) {
+             streams.errorStream.println("Error in cd: too many arguments")
+            return 1
         }
 
         val path = Paths.get(environment.currentDirectory, arguments[0])
