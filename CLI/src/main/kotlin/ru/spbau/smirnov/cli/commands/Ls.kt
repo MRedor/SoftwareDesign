@@ -8,6 +8,13 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
+
+/**
+ * Ls command.
+ *
+ * Prints the given directories.
+ * If `arguments` is empty prints current directory.
+ */
 class Ls(private val environment: Environment, arguments: List<String>) : Executable(arguments) {
     override fun execute(streams: Streams): Int {
         val output = DataOutputStream(streams.outputStream)
