@@ -1,5 +1,6 @@
 package ru.spbau.smirnov.cli.commands
 
+import ru.spbau.smirnov.cli.Environment
 import ru.spbau.smirnov.cli.executor.Streams
 import java.io.*
 
@@ -9,7 +10,7 @@ import java.io.*
  * Concatenates files listed in `arguments` to `streams.outputStream`
  * If `arguments` is empty, prints only `streams.inputStream`
  */
-class Cat(arguments: List<String>) : Executable(arguments) {
+class Cat(private val environment: Environment, arguments: List<String>) : Executable(arguments) {
     override fun execute(streams: Streams): Int {
         val output = DataOutputStream(streams.outputStream)
         if (arguments.isEmpty()) {
@@ -22,7 +23,7 @@ class Cat(arguments: List<String>) : Executable(arguments) {
         } else {
             for (filename in arguments) {
                 try {
-                    FileInputStream(filename).use {
+                    FileInputStream(environment.currentDirectory + "/" + filename).use {
                         output.writeBytes(String(DataInputStream(it).readBytes()))
                     }
                 } catch (e: IOException) {

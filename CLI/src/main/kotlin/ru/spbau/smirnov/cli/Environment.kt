@@ -1,5 +1,6 @@
 package ru.spbau.smirnov.cli
 
+import java.nio.file.Files
 import java.nio.file.Paths
 
 /**
@@ -21,6 +22,7 @@ class Environment {
         val processEnvironment = processBuilder.environment()
         processEnvironment.clear()
         processEnvironment.putAll(variableToValue)
+        processBuilder.directory(Paths.get(currentDirectory).toFile())
     }
 
     /**
@@ -31,6 +33,7 @@ class Environment {
     fun assignVariable(variable: String, value: String) {
         variableToValue[variable] = value
     }
+
 
     /**
      * Returns value assigned to `variable`.
