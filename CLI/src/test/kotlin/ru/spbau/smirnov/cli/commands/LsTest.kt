@@ -46,7 +46,7 @@ class LsTest {
     fun `Should print many directories` () {
         val first = "src: ${System.lineSeparator()}main test ${System.lineSeparator()}${System.lineSeparator()}"
         val firstReversed = "src: ${System.lineSeparator()}test main ${System.lineSeparator()}${System.lineSeparator()}"
-        val second = "src/test/resources/testLs: ${System.lineSeparator()}${System.lineSeparator()}${System.lineSeparator()}"
+        val second = "src/test/resources/testLs: ${System.lineSeparator()}output ${System.lineSeparator()}${System.lineSeparator()}"
 
         CommandTestUtils.runExecutorTestWithList(
             Ls(Environment(), listOf("src", "src/test/resources/testLs")),
