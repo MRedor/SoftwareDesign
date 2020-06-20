@@ -18,7 +18,7 @@ class ExecutableFactory(private val environment: Environment, private val shell:
             "pwd"  -> Pwd(environment, arguments)
             "exit" -> Exit(shell, arguments)
             "cat"  -> Cat(environment, arguments)
-            "wc"   -> Wc(arguments)
+            "wc"   -> Wc(environment, arguments)
             "grep" -> Grep(arguments)
             "cd"   -> Cd(environment, arguments)
             "ls"   -> Ls(environment, arguments)

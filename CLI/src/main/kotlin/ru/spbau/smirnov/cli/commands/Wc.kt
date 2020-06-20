@@ -1,5 +1,6 @@
 package ru.spbau.smirnov.cli.commands
 
+import ru.spbau.smirnov.cli.Environment
 import ru.spbau.smirnov.cli.executor.Streams
 import java.io.*
 
@@ -10,7 +11,7 @@ import java.io.*
  * Otherwise counts same parameters for files listed in arguments and total parameters for all files
  * if there were at least two arguments
  */
-class Wc(arguments: List<String>) : Executable(arguments) {
+class Wc(private val environment: Environment, arguments: List<String>) : Executable(arguments) {
     override fun execute(streams: Streams): Int {
         val output = DataOutputStream(streams.outputStream)
         if (arguments.isEmpty()) {
@@ -28,7 +29,7 @@ class Wc(arguments: List<String>) : Executable(arguments) {
 
             for (filename in arguments) {
                 try {
-                    FileInputStream(filename).use {
+                    FileInputStream(environment.currentDirectory + "/" + filename).use {
                         val (newlines, words, bytes) = calculateFile(it)
                         output.writeBytes("$newlines $words $bytes $filename${System.lineSeparator()}")
 

@@ -2,6 +2,7 @@ package ru.spbau.smirnov.cli.commands
 
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import ru.spbau.smirnov.cli.Environment
 import ru.spbau.smirnov.cli.fillFiles
 
 class WcTest {
@@ -15,7 +16,7 @@ class WcTest {
 
     @Test
     fun `Should count one file`() {
-        val wc = Wc(listOf(CommandTestUtils.resourcesDir + "AnotherFile.txt"))
+        val wc = Wc(Environment(), listOf(CommandTestUtils.resourcesDir + "AnotherFile.txt"))
         CommandTestUtils.runExecutorTest(
             wc,
             "some input",
@@ -26,7 +27,7 @@ class WcTest {
 
     @Test
     fun `Should read input if no arguments passed`() {
-        val wc = Wc(listOf())
+        val wc = Wc(Environment(), listOf())
         CommandTestUtils.runExecutorTest(
             wc,
             "some input",
@@ -37,7 +38,7 @@ class WcTest {
 
     @Test
     fun `Should calculate total on two files`() {
-        val wc = Wc(listOf(CommandTestUtils.resourcesDir + "AnotherFile.txt", CommandTestUtils.resourcesDir + "JustAFileWithSomeContent.txt"))
+        val wc = Wc(Environment(), listOf(CommandTestUtils.resourcesDir + "AnotherFile.txt", CommandTestUtils.resourcesDir + "JustAFileWithSomeContent.txt"))
         CommandTestUtils.runExecutorTest(
             wc,
             "some input",
@@ -50,7 +51,7 @@ class WcTest {
 
     @Test
     fun `Should print error if cannot find file`() {
-        val wc = Wc(listOf("a"))
+        val wc = Wc(Environment(), listOf("a"))
         CommandTestUtils.runExecutorTest(
             wc,
             "some input",

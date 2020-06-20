@@ -27,7 +27,7 @@ class ParserTest {
 
     @Test
     fun `Should parse single command with parameters`() {
-        val wc = Wc(listOf("parameter1", "parameter2"))
+        val wc = Wc(Environment(), listOf("parameter1", "parameter2"))
         assertEquals(listOf<Executable>(wc), parser.parse("wc parameter1 parameter2"))
     }
 
@@ -68,19 +68,19 @@ class ParserTest {
 
     @Test
     fun `Should consider quoted text as one token without quotes`() {
-        val wc = Wc(listOf("parameter1 and 42", "parameter2 or 42"))
+        val wc = Wc(Environment(), listOf("parameter1 and 42", "parameter2 or 42"))
         assertEquals(listOf<Executable>(wc), parser.parse("wc 'parameter1 and 42' \"parameter2 or 42\""))
     }
 
     @Test
     fun `Should leave quotes inside quotes`() {
-        val wc = Wc(listOf("parameter1 and \"42\"", "parameter2 or '42'"))
+        val wc = Wc(Environment(), listOf("parameter1 and \"42\"", "parameter2 or '42'"))
         assertEquals(listOf<Executable>(wc), parser.parse("wc 'parameter1 and \"42\"' \"parameter2 or '42'\""))
     }
 
     @Test
     fun `Should parse something with stupid placed spaces`() {
-        val wc = Wc(listOf("parameter1", "parameter2"))
+        val wc = Wc(Environment(), listOf("parameter1", "parameter2"))
         val exit = Exit(shell, listOf())
         assertEquals(listOf(wc, exit), parser.parse("     wc   parameter1     parameter2|    exit    "))
     }
